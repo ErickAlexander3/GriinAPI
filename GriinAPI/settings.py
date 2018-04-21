@@ -25,7 +25,7 @@ SECRET_KEY = 'y5&qhc5mkd(%c8!+94uvam%xauye*bl9*d5)nyhidq9o%4^_n='
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['http://griinapi-dev2.us-west-2.elasticbeanstalk.com/']
 
 
 # Application definition

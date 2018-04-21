@@ -1,9 +1,12 @@
 branch-defaults:
   master:
-    environment: GriinAPI-dev
+    environment: GriinAPI-dev2
     group_suffix: null
 environment-defaults:
   GriinAPI-dev:
+    branch: null
+    repository: null
+  GriinAPI-dev2:
     branch: null
     repository: null
 global:
