@@ -12,7 +12,7 @@ environment-defaults:
 global:
   application_name: GriinAPI
   branch: null
-  default_ec2_keyname: evelasquez
+  default_ec2_keyname: aws-eb
   default_platform: Python 3.6
   default_region: us-west-2
   include_git_submodules: true

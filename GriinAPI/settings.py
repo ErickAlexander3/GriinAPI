@@ -26,7 +26,8 @@ SECRET_KEY = 'y5&qhc5mkd(%c8!+94uvam%xauye*bl9*d5)nyhidq9o%4^_n='
 DEBUG = True
 
 ALLOWED_HOSTS = ['griinapi-dev2.us-west-2.elasticbeanstalk.com']
-
+if DEBUG:
+	ALLOWED_HOSTS.append('127.0.0.1')
 
 # Application definition
 
@@ -37,6 +38,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    #extra apps
+    'rest_framework',
+    's3direct',
+    #project apps
+    'thrives'
 ]
 
 MIDDLEWARE = [
@@ -124,9 +130,62 @@ USE_L10N = True
 
 USE_TZ = True
 
+# Rest Framework config
+
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "www", "static")
+
+
+# AWS
+# as seen in https://github.com/bradleyg/django-s3direct
+
+# If these are not defined, the EC2 instance profile and IAM role are used.
+# This requires you to add boto3 (or botocore, which is a dependency of boto3)
+# to your project dependencies.
+AWS_ACCESS_KEY_ID = 'AKIAI6H4HA3QFO2YR4PA'
+AWS_SECRET_ACCESS_KEY = '2a+J5QjH+bf7+EZfsE2r/CLjV4ZDHnr+2oC5GG4d'
+
+AWS_STORAGE_BUCKET_NAME = 'griin-assets'
+
+# The region of your bucket, more info:
+# http://docs.aws.amazon.com/general/latest/gr/rande.html#s3_region
+S3DIRECT_REGION = 'us-west-2'
+
+# Destinations, with the following keys:
+#
+# key [required] Where to upload the file to, can be either:
+#     1. '/' = Upload to root with the original filename.
+#     2. 'some/path' = Upload to some/path with the original filename.
+#     3. functionName = Pass a function and create your own path/filename.
+# auth [optional] An ACL function to whether the current Django user can perform this action.
+# allowed [optional] List of allowed MIME types.
+# acl [optional] Give the object another ACL rather than 'public-read'.
+# cache_control [optional] Cache control headers, eg 'max-age=2592000'.
+# content_disposition [optional] Useful for sending files as attachments.
+# bucket [optional] Specify a different bucket for this particular object.
+# server_side_encryption [optional] Encryption headers for buckets that require it.
+
+S3DIRECT_DESTINATIONS = {
+    'thrive_media_destination': {
+        # REQUIRED
+        'key': 'uploads/media',
+
+        # OPTIONAL
+        'auth': lambda u: u.is_staff, # Default allow anybody to upload
+        'allowed_types': ['image/jpeg', 'image/png', 'video/mp4'],  # Default allow all mime types
+        'cache_control': 'max-age=2592000', # Default no cache-control
+        'server_side_encryption': 'AES256', # Default no encryption
+    }
+}
