@@ -183,7 +183,7 @@ S3DIRECT_DESTINATIONS = {
         'key': 'uploads/media',
 
         # OPTIONAL
-        'auth': lambda u: u.is_staff, # Default allow anybody to upload
+        'auth': lambda u: True, # Default allow anybody to upload
         'allowed_types': ['image/jpeg', 'image/png', 'video/mp4'],  # Default allow all mime types
         'cache_control': 'max-age=2592000', # Default no cache-control
         'server_side_encryption': 'AES256', # Default no encryption
