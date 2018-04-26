@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'rest_framework',
     's3direct',
     #project apps
-    'thrives'
+    'thrives',
+    'webapp'
 ]
 
 MIDDLEWARE = [
