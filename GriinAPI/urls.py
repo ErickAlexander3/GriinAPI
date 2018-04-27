@@ -38,7 +38,7 @@ router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
 
 urlpatterns = [
-    path('', include('webapp.urls'))
+    path('', include('webapp.urls')),
 	path('API/', include(router.urls)),
     path('admin/', admin.site.urls),
     url(r'^s3direct/', include('s3direct.urls')),
