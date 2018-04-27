@@ -1,9 +1,5 @@
 from django.shortcuts import render
-import pdb
 
 # Create your views here.
-def home(request):
-
-	pdb.set_trace()
-	
+def home(request):	
 	return render(request, 'home.html')
