@@ -5,8 +5,49 @@
     {{ form.media }}
 </head>
 <body>
+
+<!--
     <form action="" method="post">{% csrf_token %}
         {{ form.as_p }}
     </form>
+-->
+
+    <button onclick="testFunction()">Test me!</button>
+
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+    <script type="text/javascript">
+    	const testFunction = function(){
+    		var data = {
+    			'dest': "thrive_media_destination",
+    			'name': "test_file.jpg",
+    			'type': "image/png",
+    			'size': 70000
+    		}
+
+    		var csrftoken = Cookies.get('csrftoken');//document.getElementsByName("csrfmiddlewaretoken")[0].value;
+
+    		
+    		var headers = new Headers();
+			headers.append('X-CSRFToken', csrftoken);
+			headers.append('Content-Type', 'application/x-www-form-urlencoded');
+			//headers.append('Accept', 'application/x-www-form-urlencoded; charset=utf-8');
+
+			var url = '/s3direct/get_upload_params/';
+
+			data  = Object.keys(data).map((key) => {
+				  return encodeURIComponent(key) + '=' + encodeURIComponent(data[key]);
+				}).join('&');
+
+
+    		fetch(url, {
+			    body: data, // must match 'Content-Type' header
+			    headers: headers,
+			    credentials: 'same-origin',
+			    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+			  })
+    		.then(response => response.json().then(data => console.log(data)) );
+			
+    	}
+    </script>
 </body>
 </html>
