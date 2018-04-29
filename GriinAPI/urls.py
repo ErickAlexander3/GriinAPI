@@ -40,8 +40,7 @@ router.register(r'users', UserViewSet)
 urlpatterns = [
     path('', include('webapp.urls')),
 	path('API/', include(router.urls)),
-    path('admin/', admin.site.urls),
-    url(r'^s3direct/', include('s3direct.urls')),
+    path('s3direct/', include('s3direct.urls')),
     path('form', TestView.as_view(), name='form'),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
