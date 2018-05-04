@@ -1,11 +1,8 @@
 from django.db import models
-from s3direct.fields import S3DirectField
-
-from django import forms
-from s3direct.widgets import S3DirectWidget
 
 class Thrive(models.Model):
     created = models.DateTimeField(auto_now_add=True)
+    creator = models.ForeignKey('auth.User', related_name='thrives', on_delete=models.CASCADE)
     title = models.CharField(max_length=100, null=False, blank=False)
     description = models.CharField(max_length=800)
     start_time = models.DateTimeField()
@@ -16,10 +13,7 @@ class Thrive(models.Model):
     latitude = models.DecimalField(max_digits=9, decimal_places=6) #temporal
     radius = models.PositiveSmallIntegerField()
     #media related stuff
-    story = S3DirectField(dest='thrive_media_destination')
+    story = models.TextField()
 
     class Meta:
         ordering = ('created',)
-
-class ThriveForm(forms.Form):
-    story = forms.URLField(widget=S3DirectWidget(dest='thrive_media_destination'))

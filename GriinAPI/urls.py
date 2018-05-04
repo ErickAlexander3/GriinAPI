@@ -17,30 +17,18 @@ from django.contrib import admin
 from django.urls import include, path
 from django.conf.urls import url
 
-from django.contrib.auth.models import User
-from rest_framework import routers, serializers, viewsets
+from rest_framework import routers
 
-from thrives.views import TestView
-
-# Serializers define the API representation.
-class UserSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = User
-        fields = ('url', 'username', 'email', 'is_staff')
-
-# ViewSets define the view behavior.
-class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
+from thrives.views import UserViewSet, ThriveViewSet
 
 # Routers provide an easy way of automatically determining the URL conf.
 router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
+router.register(r'thrives', ThriveViewSet)
 
 urlpatterns = [
     path('', include('webapp.urls')),
 	path('API/', include(router.urls)),
     path('s3direct/', include('s3direct.urls')),
-    path('form', TestView.as_view(), name='form'),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]

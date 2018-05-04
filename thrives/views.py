@@ -1,8 +1,16 @@
 from django.shortcuts import render
+from rest_framework import viewsets
 
-from django.views.generic import FormView
-from .models import ThriveForm
+from django.contrib.auth.models import User
+from .models import Thrive
 
-class TestView(FormView):
-    template_name = 'form.html'
-    form_class = ThriveForm
+from .serializers import UserSerializer, ThriveSerializer
+
+# Viewsets
+class ThriveViewSet(viewsets.ModelViewSet):
+    queryset = Thrive.objects.all()
+    serializer_class = ThriveSerializer
+
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
