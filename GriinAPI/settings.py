@@ -38,9 +38,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites', #used for allauth
     #extra apps
     'rest_framework',
+    'rest_framework.authtoken',
     's3direct',
+    'rest_auth',
+    'rest_auth.registration',
+    'allauth',
+    'allauth.account',
     #project apps
     'thrives',
     'webapp'
@@ -188,7 +194,14 @@ S3DIRECT_DESTINATIONS = {
         # OPTIONAL
         'auth': lambda u: True, # Default allow anybody to upload
         'allowed_types': ['image/jpeg', 'image/png', 'video/mp4'],  # Default allow all mime types
+        'content_disposition': 'inline',  # Default no content disposition
         'cache_control': 'max-age=2592000', # Default no cache-control
         'server_side_encryption': 'AES256', # Default no encryption
     }
 }
+
+
+#DJANGO rest auth related stuff
+
+SITE_ID = 1
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

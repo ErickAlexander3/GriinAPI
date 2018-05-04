@@ -3,7 +3,6 @@ from rest_framework import viewsets
 
 from django.contrib.auth.models import User
 from .models import Thrive
-
 from .serializers import UserSerializer, ThriveSerializer
 
 # Viewsets
