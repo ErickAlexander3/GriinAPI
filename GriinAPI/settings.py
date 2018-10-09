@@ -47,7 +47,9 @@ INSTALLED_APPS = [
     'rest_auth.registration',
     'allauth',
     'allauth.account',
+    'allauth.socialaccount',
     #project apps
+    'griin_auth',
     'thrives',
     'webapp'
 ]
@@ -69,7 +71,7 @@ ROOT_URLCONF = 'GriinAPI.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -201,7 +203,19 @@ S3DIRECT_DESTINATIONS = {
 }
 
 
-#DJANGO rest auth related stuff
+#allauth/rest-auth related stuff
 
 SITE_ID = 1
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+LOGIN_URL = '/accounts/login/'
+LOGIN_REDIRECT_URL = '/'
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = 'optional' #should be 'mandatory'
+ACCOUNT_PRESERVE_USERNAME_CASING = False
+ACCOUNT_CONFIRM_EMAIL_ON_GET = True
+
+REST_AUTH_REGISTER_SERIALIZERS = {
+    'REGISTER_SERIALIZER': 'griin_auth.serializers.GriinRegisterSerializer',
+}

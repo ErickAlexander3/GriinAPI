@@ -18,19 +18,26 @@ from django.urls import include, path
 from django.conf.urls import url
 
 from rest_framework import routers
+from allauth.account.views import confirm_email as allauthemailconfirmation
 
 from thrives.views import UserViewSet, ThriveViewSet
 
-# Routers provide an easy way of automatically determining the URL conf.
+#API router
 router = routers.DefaultRouter()
-router.register(r'users', UserViewSet)
 router.register(r'thrives', ThriveViewSet)
 
 urlpatterns = [
+    #webapp URLs
     path('', include('webapp.urls')),
+    url(r'^accounts/', include('allauth.urls')),
+    #API URLs
 	path('API/', include(router.urls)),
-    path('s3direct/', include('s3direct.urls')),
+    path('API/s3direct/', include('s3direct.urls')),
+    #overriden REST authentication links
+    url(r'^API/rest-auth/registration/account-confirm-email/(?P<key>[-:\w]+)/$', allauthemailconfirmation, name="account_confirm_email"), 
+    #REST authentication
+    path('API/rest-auth/', include('rest_auth.urls')),
+    path('API/rest-auth/registration/', include('rest_auth.registration.urls')),
+    #for login in the browsable API
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    path('rest-auth/', include('rest_auth.urls')),
-    path('rest-auth/registration/', include('rest_auth.registration.urls'))
 ]

@@ -1,8 +1,10 @@
 from django.db import models
+from griin_auth.models import UserProfile
 
+#thrive data
 class Thrive(models.Model):
     created = models.DateTimeField(auto_now_add=True)
-    creator = models.ForeignKey('auth.User', related_name='thrives', on_delete=models.CASCADE)
+    creator = models.ForeignKey(UserProfile, related_name='thrives', on_delete=models.CASCADE)
     title = models.CharField(max_length=100, null=False, blank=False)
     description = models.CharField(max_length=800)
     start_time = models.DateTimeField()

@@ -6289,8 +6289,8 @@ global.testFunction = function (inputElement) {
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     //headers.append('Accept', 'application/x-www-form-urlencoded; charset=utf-8');
 
-    var data_url = '/s3direct/get_upload_params/';
-    var signing_url = '/s3direct/get_aws_v4_signature/';
+    var data_url = '/API/s3direct/get_upload_params/';
+    var signing_url = '/API/s3direct/get_aws_v4_signature/';
 
     data = Object.keys(data).map(function (key) {
         return encodeURIComponent(key) + '=' + encodeURIComponent(data[key]);
